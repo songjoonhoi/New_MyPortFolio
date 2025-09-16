@@ -1,0 +1,113 @@
+/* src/main/resources/static/css/style.css */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 40px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+h1, h2, h3 {
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+h2 {
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+/* 소개 섹션 */
+.intro {
+    text-align: center;
+    margin-bottom: 50px;
+}
+.intro h1 { font-size: 2.5rem; }
+.intro .philosophy {
+    font-size: 1.1rem;
+    color: #555;
+    max-width: 800px;
+    margin: 20px auto;
+}
+.contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+.contact-info a { color: #007bff; text-decoration: none; }
+.contact-info a:hover { text-decoration: underline; }
+
+/* 기술 스택 */
+.skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.skill-item {
+    background-color: #e9ecef;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+.skill-item .skill-category {
+    font-weight: 500;
+    margin-right: 8px;
+    color: #007bff;
+}
+
+/* 프로젝트 */
+.project-grid {
+    display: grid;
+    /* 3개의 컬럼을 만들고, 각 컬럼의 너비를 동일하게(1fr) 설정 */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+.project-card {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 25px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+.project-card h3 { margin-top: 0; }
+.project-card .tech-stack {
+    margin-top: 15px;
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+/* 추가 정보 */
+.additional-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 50px;
+}
+.additional-info ul {
+    list-style: none;
+    padding: 0;
+}
+.additional-info li {
+    margin-bottom: 10px;
+}

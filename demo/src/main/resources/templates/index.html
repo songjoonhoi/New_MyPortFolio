@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${portfolio.name} + ' | 포트폴리오'"></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="intro">
+            <h1 th:text="${portfolio.name}">송준회</h1>
+            <h2 th:text="${portfolio.jobTitle}">백엔드 개발자</h2>
+            <p class="philosophy" th:text="${portfolio.philosophy}">
+                "개발은 결국 더 나은 사용자 경험을 만드는 일이라 생각합니다..."
+            </p>
+            <div class="contact-info">
+                <p>📞 <span th:text="${portfolio.phone}"></span></p>
+                <p>📧 <span th:text="${portfolio.email}"></span></p>
+                <p>🏠 <span th:text="${portfolio.address}"></span></p>
+                <p>💻 <a th:href="${portfolio.githubUrl}" target="_blank">Github</a></p>
+            </div>
+        </header>
+
+        <section class="skills">
+            <h2>SKILLS</h2>
+            <div class="skill-list">
+                <div class="skill-item" th:each="skill : ${portfolio.skills}">
+                    <span class="skill-category" th:text="${skill.category}"></span>
+                    <span class="skill-name" th:text="${skill.name}"></span>
+                </div>
+            </div>
+        </section>
+
+        <section class="projects">
+            <h2>PROJECTS</h2>
+            <div class="project-grid">
+                <div class="project-card" th:each="project : ${portfolio.projects}">
+                    <h3 th:text="${project.name}"></h3>
+                    <p class="period" th:text="${project.period}"></p>
+                    <p class="desc" th:text="${project.description}"></p>
+                    <div class="tech-stack" th:text="${project.techStack}"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="additional-info">
+            <div class="education">
+                <h3>EDUCATION</h3>
+                <ul>
+                    <li th:each="edu : ${portfolio.educations}">
+                        <strong th:text="${edu.institution} + ' - ' + ${edu.course}"></strong>
+                        <span th:text="'(' + ${edu.period} + ')'"></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="career">
+                <h3>CAREER</h3>
+                 <ul>
+                    <li th:each="car : ${portfolio.careers}">
+                        <strong th:text="${car.company} + ' - ' + ${car.position}"></strong>
+                        <span th:text="'(' + ${car.period} + ')'"></span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>
