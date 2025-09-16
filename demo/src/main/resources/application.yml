@@ -1,0 +1,52 @@
+# ===============================================
+# 공통 설정 (모든 환경에서 사용)
+# ===============================================
+server:
+  port: 8888 # 서버 포트를 8888로 설정
+
+spring:
+  # H2 데이터베이스 웹 콘솔 사용 설정
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  # JPA 및 Hibernate 설정
+  jpa:
+    hibernate:
+      ddl-auto: update # 애플리케이션 실행 시 DB 테이블 자동 업데이트
+    show-sql: true # 실행되는 SQL 쿼리를 로그로 출력
+    properties:
+      hibernate:
+        format_sql: true # SQL 쿼리를 보기 좋게 정렬
+        default_batch_fetch_size: 100 # 연관관계 조회 성능 최적화
+
+---
+
+# ===============================================
+# 개발 환경 (local, dev)
+# ===============================================
+spring:
+  config:
+    activate:
+      on-profile: "dev" # 'dev' 프로필 활성화
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb;MODE=MySQL # H2 데이터베이스를 MySQL 모드로 실행
+    username: sa
+    password:
+
+---
+
+# ===============================================
+# 운영 환경 (production, prod) - AWS 배포 시 사용
+# ===============================================
+# spring:
+#   config:
+#     activate:
+#       on-profile: "prod" # 'prod' 프로필 활성화
+#   datasource:
+#     driver-class-name: com.mysql.cj.jdbc.Driver
+#     # TODO: AWS RDS 정보로 교체해야 합니다.
+#     url: jdbc:mysql://[RDS_ENDPOINT_입력]:3306/[DB이름_입력]
+#     username: [사용자이름_입력]
+#     password: [비밀번호_입력]
