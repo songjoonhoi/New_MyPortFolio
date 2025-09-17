@@ -44,6 +44,7 @@ public class PortfolioResponse {
         this.phone = entity.getPhone();
         this.githubUrl = entity.getGithubUrl();
         this.profileImageUrl = entity.getProfileImageUrl();
+        
 
         // --- 스킬 카테고리 순서 지정 및 정렬 로직 ---
 
@@ -74,45 +75,54 @@ public class PortfolioResponse {
 
     @Getter
     private static class SkillDto {
+        private final Long id;
         private final String category;
         private final String name;
         public SkillDto(Skill skill) {
+            this.id = skill.getId();
             this.category = skill.getCategory();
             this.name = skill.getName();
         }
     }
 
-    @Getter
+   @Getter
     private static class ProjectDto {
+        private final Long id;
         private final String name;
         private final String period;
         private final String description;
-        private final String problem;
-        private final String action;
-        private final String result;
         private final String techStack;
         private final String projectUrl;
         private final String teamInfo;
+        private final String thumbnailUrl;
+        private final Set<ProjectDetailDto> details; // 상세 정보 Set 추가
+
         public ProjectDto(Project project) {
+            this.id = project.getId();
             this.name = project.getName();
             this.period = project.getPeriod();
             this.description = project.getDescription();
-            this.problem = project.getProblem();
-            this.action = project.getAction();
-            this.result = project.getResult();
             this.techStack = project.getTechStack();
             this.projectUrl = project.getProjectUrl();
             this.teamInfo = project.getTeamInfo();
+            this.thumbnailUrl = project.getThumbnailUrl();
+            
+            // 상세 정보 Set을 DTO Set으로 변환
+            this.details = project.getDetails().stream()
+                            .map(ProjectDetailDto::new)
+                            .collect(Collectors.toSet());
         }
     }
 
     @Getter
     private static class EducationDto {
+        private final Long id;
         private final String institution;
         private final String course;
         private final String period;
         private final String description;
         public EducationDto(Education education) {
+            this.id = education.getId();
             this.institution = education.getInstitution();
             this.course = education.getCourse();
             this.period = education.getPeriod();
@@ -138,13 +148,28 @@ public class PortfolioResponse {
 
     @Getter
     private static class CertificationDto {
+        private final Long id;
         private final String name;
         private final String issuer;
         private final String acquisitionDate;
         public CertificationDto(Certification certification) {
+            this.id = certification.getId();
             this.name = certification.getName();
             this.issuer = certification.getIssuer();
             this.acquisitionDate = certification.getAcquisitionDate();
+        }
+    }
+
+     @Getter
+    private static class ProjectDetailDto {
+        private final Long id;
+        private final String imageUrl;
+        private final String description;
+
+        public ProjectDetailDto(ProjectDetail detail) {
+            this.id = detail.getId();
+            this.imageUrl = detail.getImageUrl();
+            this.description = detail.getDescription();
         }
     }
 }

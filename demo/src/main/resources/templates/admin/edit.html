@@ -65,7 +65,6 @@
 
         <div class="form-section">
             <h2>경력 (Activity) 관리</h2>
-            
             <div th:each="career : ${portfolio.careers}" class="item-card">
                 <div>
                     <p><strong>회사명:</strong> <span th:text="${career.company}"></span></p>
@@ -78,9 +77,7 @@
                        onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
                 </div>
             </div>
-            
             <hr class="section-divider">
-            
             <h3>새로운 경력 추가</h3>
             <form th:action="@{/admin/career/add}" method="post">
                 <div class="form-group">
@@ -102,7 +99,130 @@
                 <button type="submit" class="submit-btn">경력 추가하기</button>
             </form>
         </div>
-        
+
+        <hr class="section-divider">
+
+        <div class="form-section">
+            <h2>학력 & 교육 관리</h2>
+            <div th:each="edu : ${portfolio.educations}" class="item-card">
+                <div>
+                    <p><strong>기관명:</strong> <span th:text="${edu.institution}"></span></p>
+                    <p><strong>과정/전공:</strong> <span th:text="${edu.course}"></span></p>
+                    <p><strong>기간:</strong> <span th:text="${edu.period}"></span></p>
+                </div>
+                <div>
+                    <a th:href="@{/admin/education/edit/{id}(id=${edu.id})}" style="margin-right: 10px; color: #007bff;">수정</a>
+                    <a th:href="@{/admin/education/delete/{id}(id=${edu.id})}"
+                       onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
+                </div>
+            </div>
+            <hr class="section-divider">
+            <h3>새로운 학력/교육 추가</h3>
+            <form th:action="@{/admin/education/add}" method="post">
+                <div class="form-group">
+                    <label for="eduInstitution">기관명</label>
+                    <input type="text" id="eduInstitution" name="institution" required>
+                </div>
+                <div class="form-group">
+                    <label for="eduCourse">과정/전공</label>
+                    <input type="text" id="eduCourse" name="course" required>
+                </div>
+                <div class="form-group">
+                    <label for="eduPeriod">기간</label>
+                    <input type="text" id="eduPeriod" name="period" required>
+                </div>
+                <div class="form-group">
+                    <label for="eduDescription">세부 내용 (선택)</label>
+                    <input type="text" id="eduDescription" name="description">
+                </div>
+                <button type="submit" class="submit-btn">학력/교육 추가하기</button>
+            </form>
         </div>
+
+        <hr class="section-divider">
+
+        <div class="form-section">
+            <h2>자격증 (License) 관리</h2>
+            <div th:each="cert : ${portfolio.certifications}" class="item-card">
+                <div>
+                    <p><strong>자격증명:</strong> <span th:text="${cert.name}"></span></p>
+                    <p><strong>발급기관:</strong> <span th:text="${cert.issuer}"></span></p>
+                    <p><strong>취득일:</strong> <span th:text="${cert.acquisitionDate}"></span></p>
+                </div>
+                <div>
+                    <a th:href="@{/admin/certification/edit/{id}(id=${cert.id})}" style="margin-right: 10px; color: #007bff;">수정</a>
+                    <a th:href="@{/admin/certification/delete/{id}(id=${cert.id})}"
+                       onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
+                </div>
+            </div>
+            <hr class="section-divider">
+            <h3>새로운 자격증 추가</h3>
+            <form th:action="@{/admin/certification/add}" method="post">
+                <div class="form-group">
+                    <label for="certName">자격증명</label>
+                    <input type="text" id="certName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="certIssuer">발급기관</label>
+                    <input type="text" id="certIssuer" name="issuer" required>
+                </div>
+                <div class="form-group">
+                    <label for="certDate">취득일</label>
+                    <input type="text" id="certDate" name="acquisitionDate" placeholder="예: 2025.07" required>
+                </div>
+                <button type="submit" class="submit-btn">자격증 추가하기</button>
+            </form>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="form-section">
+            <h2>프로젝트 (Project) 관리</h2>
+            <div th:each="project : ${portfolio.projects}" class="item-card">
+                <div>
+                    <p><strong>프로젝트명:</strong> <span th:text="${project.name}"></span></p>
+                    <p><strong>기간:</strong> <span th:text="${project.period}"></span></p>
+                </div>
+                <div>
+                    <a th:href="@{/admin/project/edit/{id}(id=${project.id})}" style="margin-right: 10px; color: #007bff;">관리</a>
+                    <a th:href="@{/admin/project/delete/{id}(id=${project.id})}"
+                       onclick="return confirm('프로젝트 전체를 삭제하시겠습니까?');">삭제</a>
+                </div>
+            </div>
+            <hr class="section-divider">
+            <h3>새로운 프로젝트 추가</h3>
+            <form th:action="@{/admin/project/add}" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>프로젝트명</label>
+                    <input type="text" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label>대표 이미지 (썸네일)</label>
+                    <input type="file" name="thumbnailImage" required>
+                </div>
+                <div class="form-group">
+                    <label>기간</label>
+                    <input type="text" name="period" placeholder="예: 2024.01 ~ 2025.01" required>
+                </div>
+                <div class="form-group">
+                    <label>한 줄 요약</label>
+                    <input type="text" name="description">
+                </div>
+                <div class="form-group">
+                    <label>기술 스택</label>
+                    <input type="text" name="techStack" placeholder="예: Spring Boot, JPA, MySQL">
+                </div>
+                <div class="form-group">
+                    <label>프로젝트 URL</label>
+                    <input type="text" name="projectUrl">
+                </div>
+                <div class="form-group">
+                    <label>팀 정보</label>
+                    <input type="text" name="teamInfo">
+                </div>
+                <button type="submit" class="submit-btn">프로젝트 생성 & 상세정보 입력</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

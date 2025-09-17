@@ -10,24 +10,21 @@
 <body>
 
     <nav class="main-nav">
-    <div class="nav-container">
-        <a class="nav-brand" href="#">SONGJOONHOI's Portfolio</a>
-        <div class="nav-links">
-            <a href="#about-me">About Me</a>
-            <a href="#skills">Skills</a>
-            <a href="#projects">Projects</a>
-            <a href="#career">Career</a>
-
-            <a th:href="@{/login}" sec:authorize="isAnonymous()">로그인</a>
-
-            <span sec:authorize="isAuthenticated()">
-                <a th:href="@{/admin}">관리자</a>
-                <a th:href="@{/logout}">로그아웃</a>
-            </span>
-
+        <div class="nav-container">
+            <a class="nav-brand" href="#">SONGJOONHOI's Portfolio</a>
+            <div class="nav-links">
+                <a href="#about-me">About Me</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#career">Career</a>
+                <a th:href="@{/login}" sec:authorize="isAnonymous()">로그인</a>
+                <span sec:authorize="isAuthenticated()">
+                    <a th:href="@{/admin}">관리자</a>
+                    <a th:href="@{/logout}">로그아웃</a>
+                </span>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
     <header class="hero">
         <div class="hero-content">
@@ -65,20 +62,21 @@
                 </div>
                 <div class="info-block">
                     <h3>EDUCATION</h3>
-                    <div th:each="edu : ${portfolio.educations}" th:if="${edu.course.contains('졸업')}">
-                         <p><strong th:text="${edu.period}"></strong> <br> <span th:text="${edu.institution}"></span></p>
+                    <div th:each="edu : ${portfolio.educations}" class="education-item">
+                         <p>
+                             <strong th:text="${edu.period}"></strong> <br>
+                             <span th:text="${edu.institution} + ' - ' + ${edu.course}"></span>
+                         </p>
+                         <p th:if="${edu.description != null and !edu.description.isEmpty()}"
+                            th:text="${edu.description}"
+                            class="description">
+                         </p>
                     </div>
                 </div>
                 <div class="info-block">
                     <h3>LICENSE</h3>
                      <div th:each="cert : ${portfolio.certifications}">
                          <p><strong th:text="${cert.acquisitionDate}"></strong> <br> <span th:text="${cert.name}"></span></p>
-                    </div>
-                </div>
-                 <div class="info-block">
-                    <h3>TRAINING</h3>
-                    <div th:each="edu : ${portfolio.educations}" th:unless="${edu.course.contains('졸업')}">
-                         <p><strong th:text="${edu.period}"></strong> <br> <span th:text="${edu.institution} + ' - ' + ${edu.course}"></span></p>
                     </div>
                 </div>
             </div>
