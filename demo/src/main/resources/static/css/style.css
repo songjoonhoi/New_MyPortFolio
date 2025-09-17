@@ -1,80 +1,191 @@
 /* src/main/resources/static/css/style.css */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap'); /* 이름 서명 폰트 */
 
+:root {
+    --main-color: #3d5a80;
+    --accent-color: #ee6c4d;
+    --background-color: #f8f9fa;
+    --text-color: #343a40;
+    --light-text-color: #f8f9fa;
+    --card-bg-color: #ffffff;
+    --border-color: #e9ecef;
+}
+
+/* --- 기본 & 리셋 --- */
 body {
     font-family: 'Noto Sans KR', sans-serif;
-    background-color: #f4f7f6;
-    color: #333;
-    line-height: 1.6;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.7;
     margin: 0;
-    padding: 40px;
 }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
-.container {
+/* --- 네비게이션 바 --- */
+.main-nav {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 15px 30px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease-in-out;
+}
+.main-nav:hover { background-color: rgba(0, 0, 0, 0.7); }
+.nav-container {
     max-width: 1200px;
     margin: 0 auto;
-    background: #fff;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-
-h1, h2, h3 {
+.nav-brand {
+    color: var(--light-text-color);
+    font-size: 1.2rem;
     font-weight: 700;
-    color: #1a1a1a;
+    text-decoration: none;
 }
+.nav-links a {
+    color: var(--light-text-color);
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+.nav-links a:hover { color: #e0fbfc; }
 
-h2 {
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 10px;
-    margin-top: 50px;
-    margin-bottom: 30px;
-}
+/* --- Hero Section --- */
+.hero {
+    height: 100vh;
+    /* ▼▼▼ background 속성 앞에 // 를 붙여서 잠시 비활성화 합니다 ▼▼▼ */
+    /* background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/images/background.jpg') no-repeat center center/cover; */
+    
+    /* ▼▼▼ 대신 단색 배경을 임시로 지정합니다 ▼▼▼ */
+    background-color: #3d5a80; /* main-color와 동일하게 */
 
-/* 소개 섹션 */
-.intro {
-    text-align: center;
-    margin-bottom: 50px;
-}
-.intro h1 { font-size: 2.5rem; }
-.intro .philosophy {
-    font-size: 1.1rem;
-    color: #555;
-    max-width: 800px;
-    margin: 20px auto;
-}
-.contact-info {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 20px;
+    align-items: center;
+    text-align: center;
+    color: var(--light-text-color);
+    padding: 20px;
 }
-.contact-info a { color: #007bff; text-decoration: none; }
-.contact-info a:hover { text-decoration: underline; }
+.hero-content h1 { font-size: 3rem; font-weight: 300; margin: 0; }
+.hero-content h2 { font-size: 2.5rem; font-weight: 700; margin: 10px 0 20px 0; }
+.hero-button {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: var(--light-text-color);
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 700;
+    margin-top: 30px;
+    transition: background-color 0.3s;
+}
+.hero-button:hover { background-color: #e55a3c; transform: translateY(-2px); }
 
-/* 기술 스택 */
-.skill-list {
+/* --- 메인 컨텐츠 (About Me) --- */
+.content-wrapper {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 40px;
+    display: flex;
+    gap: 60px;
+    background-color: var(--card-bg-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+.left-column { flex: 1; text-align: center; }
+.profile-picture {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid var(--card-bg-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+.name-signature { font-family: 'Gowun Dodum', sans-serif; font-size: 2rem; }
+.philosophy-text { color: #6c757d; font-size: 0.95rem; }
+.right-column { flex: 2; }
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 30px;
+}
+.info-block h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--main-color);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+.info-block p, .info-block li { margin: 5px 0; font-size: 0.9rem; }
+.info-block ul { list-style: none; padding: 0; }
+.info-block a { color: #007bff; text-decoration: none; font-weight: 500; }
+.info-block a:hover { text-decoration: underline; }
+
+/* --- 추가 섹션 래퍼 --- */
+.additional-sections-wrapper {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 40px;
+    background-color: var(--card-bg-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+.additional-sections-wrapper h2 {
+    border-bottom: 2px solid var(--main-color);
+    padding-bottom: 10px;
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+    text-align: center;
+}
+.skills { margin-bottom: 60px; }
+.projects { margin-bottom: 0; }
+
+/* ▼▼▼ [수정됨] 기술 스택 (3단 그리드 목록형) ▼▼▼ */
+.skill-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+.skill-category-block h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--main-color);
+    margin-bottom: 15px;
+    border-bottom: none;
+    text-align: left;
+    margin-top: 0; /* h3의 기본 마진 제거 */
+}
+.skill-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 12px;
+    justify-content: flex-start;
 }
-.skill-item {
-    background-color: #e9ecef;
-    padding: 10px 15px;
+.skill-tag {
+    background-color: #f1f3f5;
+    color: #495057;
+    padding: 8px 16px;
     border-radius: 20px;
     font-size: 0.9rem;
-}
-.skill-item .skill-category {
     font-weight: 500;
-    margin-right: 8px;
-    color: #007bff;
 }
 
-/* 프로젝트 */
+/* --- 프로젝트 --- */
 .project-grid {
     display: grid;
-    /* 3개의 컬럼을 만들고, 각 컬럼의 너비를 동일하게(1fr) 설정 */
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
 }
@@ -97,17 +208,51 @@ h2 {
     color: #6c757d;
 }
 
-/* 추가 정보 */
-.additional-info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-top: 50px;
+/* --- 프로젝트 모달 --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
 }
-.additional-info ul {
-    list-style: none;
-    padding: 0;
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
 }
-.additional-info li {
-    margin-bottom: 10px;
+.modal-content {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    max-width: 800px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s;
 }
+.modal-overlay.active .modal-content {
+    transform: scale(1);
+}
+.modal-close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #888;
+}
+.modal-content h3 { margin-top: 0; }
+.modal-content hr { margin: 20px 0; border: 1px solid var(--border-color); }
+.modal-section h4 { color: var(--main-color); }

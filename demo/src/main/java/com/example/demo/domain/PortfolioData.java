@@ -3,11 +3,14 @@ package com.example.demo.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import java.util.HashSet; // HashSet import
-import java.util.Set;    // Set import
+import lombok.Setter;
+
+import java.util.HashSet; 
+import java.util.Set;    
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class PortfolioData {
 
@@ -25,6 +28,7 @@ public class PortfolioData {
     private String email;
     private String phone;
     private String githubUrl;
+    private String profileImageUrl;
 
     // --- 연관 관계 (List -> Set 으로 변경) ---
     @OneToMany(mappedBy = "portfolioData", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -52,5 +56,6 @@ public class PortfolioData {
         this.email = email;
         this.phone = phone;
         this.githubUrl = githubUrl;
+        this.profileImageUrl = "/images/default-profile.png";
     }
 }

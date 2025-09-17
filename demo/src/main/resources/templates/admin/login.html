@@ -3,15 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>관리자 로그인</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <style>
-        .login-container { max-width: 400px; margin: 100px auto; padding: 30px; }
-        .login-container h1 { text-align: center; }
-        .form-group { margin-bottom: 15px; }
-        .form-group input { width: 100%; padding: 10px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 10px; background: #007bff; color: white; border: none; cursor: pointer; }
-        .error { color: red; text-align: center; margin-bottom: 15px; }
-    </style>
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
     <div class="container login-container">
@@ -19,7 +11,6 @@
         <div th:if="${param.error}" class="error">
             아이디 또는 비밀번호가 올바르지 않습니다.
         </div>
-
         <form th:action="@{/login}" method="post">
             <div class="form-group">
                 <input type="text" name="username" placeholder="아이디" required autofocus>

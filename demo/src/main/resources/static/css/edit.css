@@ -1,0 +1,82 @@
+/* src/main/resources/static/css/edit.css */
+
+.admin-container { 
+    max-width: 900px; 
+    margin: 50px auto; 
+}
+
+.form-section { 
+    margin-bottom: 30px; 
+}
+
+.form-section h2 { 
+    text-align: left; 
+    border: none; 
+    font-size: 1.5rem; 
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+}
+
+.form-section h3 {
+    font-size: 1.2rem;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.form-group { 
+    margin-bottom: 15px; 
+}
+
+.form-group label { 
+    display: block; 
+    font-weight: 500; 
+    margin-bottom: 5px; 
+}
+
+.form-group input[type="text"], 
+.form-group textarea,
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.submit-btn {
+    padding: 12px 25px;
+    background-color: #3d5a80;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* ▼▼▼ [새로 추가] 기존 항목을 감싸는 카드 스타일 ▼▼▼ */
+.item-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-card p {
+    margin: 0 0 5px 0;
+}
+
+.item-card a {
+    color: red;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* ▼▼▼ [새로 추가] 섹션 구분을 위한 hr 태그 스타일 ▼▼▼ */
+.section-divider {
+    margin: 30px 0;
+    border: 0;
+    border-top: 1px solid #eee;
+}

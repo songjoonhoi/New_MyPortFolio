@@ -53,7 +53,7 @@ public class SecurityConfig {
                 // 커스텀 로그인 페이지 경로 설정
                 .loginPage("/login")
                 // 로그인 성공 시 이동할 기본 경로
-                .defaultSuccessUrl("/admin")
+                .defaultSuccessUrl("/admin", true)
                 // 로그인 페이지는 모두 접근 허용
                 .permitAll()
             )
