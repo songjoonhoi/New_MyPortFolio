@@ -1,7 +1,6 @@
 package com.example.demo.dto;
 
 import com.example.demo.domain.Project;
-import com.example.demo.domain.ProjectDetail;
 import lombok.Getter;
 import java.util.Comparator;
 import java.util.List;

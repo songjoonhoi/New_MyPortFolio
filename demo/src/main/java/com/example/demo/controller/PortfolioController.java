@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
-import com.example.demo.dto.PortfolioResponse;
 import com.example.demo.service.PortfolioService;
 
 import lombok.RequiredArgsConstructor;

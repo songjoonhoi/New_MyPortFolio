@@ -1,29 +1,31 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/admin-layout}">
+
 <head>
-    <meta charset="UTF-8">
     <title>자격증 수정</title>
-    <link rel="stylesheet" href="/css/edit.css">
 </head>
-<body>
-    <div class="container admin-container">
-        <h1>자격증 수정</h1>
-        <form th:action="@{/admin/certification/update/{id}(id=${certification.id})}" th:object="${certification}" method="post">
-            <div class="form-group">
-                <label for="name">자격증명</label>
-                <input type="text" id="name" th:field="*{name}" required>
-            </div>
-            <div class="form-group">
-                <label for="issuer">발급기관</label>
-                <input type="text" id="issuer" th:field="*{issuer}" required>
-            </div>
-            <div class="form-group">
-                <label for="acquisitionDate">취득일</label>
-                <input type="text" id="acquisitionDate" th:field="*{acquisitionDate}" required>
-            </div>
-            <button type="submit" class="submit-btn">수정 완료</button>
-            <a href="/admin" style="margin-left: 10px;">취소</a>
-        </form>
-    </div>
-</body>
+
+<section layout:fragment="content">
+    <h1>자격증 수정</h1>
+    <form th:action="@{/admin/certification/update/{id}(id=${certification.id})}" th:object="${certification}" method="post">
+        <div class="form-group">
+            <label for="name">자격증명</label>
+            <input type="text" id="name" th:field="*{name}" required>
+        </div>
+        <div class="form-group">
+            <label for="issuer">발급기관</label>
+            <input type="text" id="issuer" th:field="*{issuer}" required>
+        </div>
+        <div class="form-group">
+            <label for="acquisitionDate">취득일</label>
+            <input type="text" id="acquisitionDate" th:field="*{acquisitionDate}" required>
+        </div>
+        <button type="submit" class="submit-btn">수정 완료</button>
+        <a href="/admin" style="margin-left: 10px;">취소</a>
+    </form>
+</section>
+
 </html>

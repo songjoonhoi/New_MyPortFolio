@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>잘못된 요청입니다 - 400</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .error-container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 40px;
+            text-align: center;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .error-code {
+            font-size: 6rem;
+            font-weight: 700;
+            color: #ffc107;
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+        
+        .error-message {
+            font-size: 1.5rem;
+            color: #343a40;
+            margin-bottom: 15px;
+        }
+        
+        .error-details {
+            color: #6c757d;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .error-list {
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .error-list h3 {
+            color: #dc3545;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .error-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .error-list li {
+            padding: 5px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .error-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .error-list .field-name {
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-home, .btn-back {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-home {
+            background-color: #3d5a80;
+            color: white;
+        }
+        
+        .btn-home:hover {
+            background-color: #2c4666;
+            transform: translateY(-1px);
+        }
+        
+        .btn-back {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+        }
+        
+        .btn-back:hover {
+            background-color: #e9ecef;
+            color: #495057;
+        }
+        
+        @media (max-width: 768px) {
+            .error-container {
+                margin: 50px 20px;
+                padding: 30px 20px;
+            }
+            
+            .error-code {
+                font-size: 4rem;
+            }
+            
+            .error-message {
+                font-size: 1.25rem;
+            }
+            
+            .error-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-home, .btn-back {
+                width: 200px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-code">400</div>
+        <h1 class="error-message" th:text="${message} ?: '잘못된 요청입니다'">잘못된 요청입니다</h1>
+        <p class="error-details" th:text="${details} ?: '요청 내용을 다시 확인해주세요.'">
+            요청 내용을 다시 확인해주세요.
+        </p>
+        
+        <div th:if="${errors}" class="error-list">
+            <h3>❗ 오류 내용:</h3>
+            <ul>
+                <li th:each="error : ${errors}">
+                    <span class="field-name" th:text="${error.key}">필드명</span>: 
+                    <span th:text="${error.value}">오류 메시지</span>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="error-actions">
+            <a href="/" class="btn-home">🏠 홈으로 돌아가기</a>
+            <a href="javascript:history.back()" class="btn-back">← 이전 페이지</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -22,6 +22,7 @@
                     <a th:href="@{/admin}">관리자</a>
                     <a th:href="@{/logout}">로그아웃</a>
                 </span>
+                
             </div>
         </div>
     </nav>
@@ -99,19 +100,26 @@
         <section id="projects" class="projects">
             <h2>PROJECTS</h2>
             <div class="project-grid">
-                <div class="project-card" th:each="project : ${portfolio.projects}"
+                <div class="project-card" th:each="project, iterStat : ${portfolio.projects}"
                      th:data-name="${project.name}"
                      th:data-period="${project.period}"
-                     th:data-description="${project.description}"
-                     th:data-problem="${project.problem}"
-                     th:data-action="${project.action}"
-                     th:data-result="${project.result}"
                      th:data-tech="${project.techStack}"
-                     th:data-url="${project.projectUrl}">
-                    <h3 th:text="${project.name}"></h3>
-                    <p class="period" th:text="${project.period}"></p>
-                    <p class="desc" th:text="${project.description}"></p>
-                    <div class="tech-stack" th:text="${project.techStack}"></div>
+                     th:data-url="${project.projectUrl}"
+                     th:data-details-id="'project-details-' + ${iterStat.count}">
+                    
+                    <img th:src="${project.thumbnailUrl}" alt="프로젝트 썸네일" class="project-thumbnail">
+                    <div class="project-card-content">
+                        <h3 th:text="${project.name}"></h3>
+                        <p class="period" th:text="${project.period}"></p>
+                        <p class="desc" th:text="${project.description}"></p>
+                    </div>
+
+                    <div th:id="'project-details-' + ${iterStat.count}" style="display: none;">
+                        <div th:each="detail : ${project.details}" class="detail-item-source">
+                            <img th:src="${detail.imageUrl}" alt="상세 이미지">
+                            <p th:text="${detail.description}"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -123,18 +131,9 @@
             <h3 id="modal-name"></h3>
             <p id="modal-period"></p>
             <hr>
-            <div class="modal-section">
-                <h4>❗️ Problem</h4>
-                <p id="modal-problem"></p>
-            </div>
-            <div class="modal-section">
-                <h4>🎬 Action</h4>
-                <p id="modal-action"></p>
-            </div>
-            <div class="modal-section">
-                <h4>📈 Result</h4>
-                <p id="modal-result"></p>
-            </div>
+            
+            <div id="modal-details-container"></div>
+            
             <hr>
             <p><strong>Tech Stack:</strong> <span id="modal-tech"></span></p>
             <a id="modal-url" href="#" target="_blank">프로젝트 링크 바로가기</a>

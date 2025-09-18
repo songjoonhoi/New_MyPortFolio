@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<header th:fragment="adminHeaderFragment">
+    <nav class="admin-nav">
+        <div class="nav-container">
+            <a class="nav-brand" th:href="@{/}">포트폴리오 홈으로</a>
+            <div class="nav-links">
+                <a th:href="@{/admin}">관리자 홈</a>
+                <a th:href="@{/logout}">로그아웃</a>
+            </div>
+        </div>
+    </nav>
+</header>
+
+</html>

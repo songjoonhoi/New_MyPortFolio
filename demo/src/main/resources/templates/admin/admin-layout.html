@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title layout:title-pattern="$CONTENT_TITLE | 포트폴리오 관리"></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/edit.css">
+</head>
+<body>
+    <div th:replace="~{admin/fragments/_header :: adminHeaderFragment}"></div>
+
+    <main layout:fragment="content" class="container admin-container"></main>
+
+    <div th:replace="~{admin/fragments/_footer :: adminFooterFragment}"></div>
+
+    <div id="success-message" th:if="${message}" th:text="${message}" style="display: none;"></div>
+
+    <script src="/js/admin-script.js"></script>
+</body>
+</html>

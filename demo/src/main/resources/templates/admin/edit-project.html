@@ -2,80 +2,303 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>프로젝트 수정</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로젝트 상세 관리</title>
+    <meta name="description" content="프로젝트 상세 정보 관리 페이지">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/edit.css">
+    <link rel="stylesheet" href="/css/project-detail.css">
 </head>
 <body>
-    <div class="container admin-container">
-        <h1>프로젝트 수정: <span th:text="${project.name}"></span></h1>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">본문으로 건너뛰기</a>
 
-        <form th:action="@{/admin/project/update/{id}(id=${project.id})}" th:object="${project}" method="post" enctype="multipart/form-data">
-            <div class="form-section">
-                <h2>프로젝트 기본 정보</h2>
-                <div class="form-group">
-                    <label>대표 이미지 (썸네일)</label>
-                    <input type="file" name="thumbnailImage">
-                    <p>현재 썸네일: <img th:src="*{thumbnailUrl}" alt="썸네일" width="150"></p>
+    <div class="admin-container" id="main-content">
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb" aria-label="페이지 경로">
+            <a href="/admin">관리자 홈</a>
+            <span class="breadcrumb-separator">›</span>
+            <span aria-current="page">프로젝트 상세 관리</span>
+        </nav>
+
+        <!-- Project Header -->
+        <header class="project-header">
+            <h1 class="project-title" th:text="${project.name}">프로젝트명</h1>
+            <p class="project-subtitle" th:text="${project.description}">프로젝트 설명</p>
+            <div class="project-meta">
+                <div class="meta-item">
+                    <span class="meta-icon">📅</span>
+                    <span th:text="${project.period}">프로젝트 기간</span>
                 </div>
-                <div class="form-group">
-                    <label>프로젝트명</label>
-                    <input type="text" th:field="*{name}" required>
+                <div class="meta-item" th:if="${project.teamInfo}">
+                    <span class="meta-icon">👥</span>
+                    <span th:text="${project.teamInfo}">팀 정보</span>
                 </div>
-                <div class="form-group">
-                    <label>기간</label>
-                    <input type="text" th:field="*{period}" required>
-                </div>
-                <div class="form-group">
-                    <label>한 줄 요약</label>
-                    <input type="text" th:field="*{description}">
-                </div>
-                <div class="form-group">
-                    <label>기술 스택</label>
-                    <input type="text" th:field="*{techStack}">
-                </div>
-                 <div class="form-group">
-                    <label>프로젝트 URL</label>
-                    <input type="text" th:field="*{projectUrl}">
-                </div>
-                 <div class="form-group">
-                    <label>팀 정보</label>
-                    <input type="text" th:field="*{teamInfo}">
+                <div class="meta-item" th:if="${project.projectUrl}">
+                    <span class="meta-icon">🔗</span>
+                    <a th:href="${project.projectUrl}" target="_blank" class="project-link">프로젝트 보기</a>
                 </div>
             </div>
-            <button type="submit" class="submit-btn">기본 정보 저장</button>
-        </form>
+        </header>
 
-        <hr class="section-divider">
-
-        <div class="form-section">
-            <h2>프로젝트 상세 정보</h2>
-            <div th:if="${#lists.isEmpty(project.details)}">
-                <p>추가된 상세 정보가 없습니다.</p>
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <div class="btn-group">
+                <a href="/admin" class="btn btn-secondary">
+                    <span class="btn-icon">←</span>
+                    관리자 홈으로
+                </a>
             </div>
-            <div th:each="detail : ${project.details}" class="item-card">
-                <img th:src="${detail.imageUrl}" width="100" style="margin-right: 15px;">
-                <p th:text="${detail.description}" style="flex-grow: 1;"></p>
-                <a th:href="@{/admin/project/detail/delete/{id}(id=${detail.id})}"
-                   onclick="return confirm('이 항목을 삭제하시겠습니까?');">삭제</a>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary" onclick="scrollToAddSection()">
+                    <span class="btn-icon">➕</span>
+                    상세 정보 추가
+                </button>
             </div>
-
-            <hr class="section-divider">
-
-            <h3>새로운 상세 정보 추가</h3>
-            <form th:action="@{/admin/project/{projectId}/addDetail(projectId=${project.id})}" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label>상세 이미지</label>
-                    <input type="file" name="detailImage" required>
-                </div>
-                <div class="form-group">
-                    <label>이미지 설명</label>
-                    <textarea name="description" rows="4" required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">상세 정보 추가</button>
-            </form>
         </div>
 
-        <a href="/admin" style="display: inline-block; margin-top: 20px;">관리자 메인으로 돌아가기</a>
+        <!-- Project Basic Info Update Form -->
+        <section class="form-section" id="basic-info-section">
+            <h2>프로젝트 기본 정보 수정</h2>
+            <form th:action="@{/admin/project/update/{id}(id=${project.id})}" 
+                  method="post" 
+                  enctype="multipart/form-data"
+                  id="basicInfoForm">
+                
+                <!-- Current Thumbnail -->
+                <div class="thumbnail-section">
+                    <h3>현재 썸네일</h3>
+                    <div class="current-thumbnail">
+                        <img th:src="${project.thumbnailUrl}" 
+                             alt="프로젝트 썸네일"
+                             th:if="${project.thumbnailUrl}"
+                             class="thumbnail-image">
+                        <div class="thumbnail-info" th:if="${project.thumbnailUrl}">
+                            <p><strong>현재 썸네일:</strong> <span th:text="${project.thumbnailUrl}"></span></p>
+                        </div>
+                    </div>
+                    
+                    <!-- New Thumbnail Upload -->
+                    <div class="form-group">
+                        <label for="thumbnailImage">새 썸네일 업로드 (선택사항)</label>
+                        <input type="file" 
+                               id="thumbnailImage"
+                               name="thumbnailImage" 
+                               class="form-control-file"
+                               accept="image/jpeg,image/png,image/webp"
+                               aria-describedby="thumbnailHelp">
+                        <small id="thumbnailHelp" class="form-text">
+                            새 이미지를 선택하면 기존 썸네일이 교체됩니다.
+                        </small>
+                        <div id="thumbnailPreview" class="image-preview" style="display: none;"></div>
+                    </div>
+                </div>
+
+                <!-- Basic Project Fields -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="projectName" class="required">프로젝트명</label>
+                        <input type="text" 
+                               id="projectName"
+                               name="name" 
+                               class="form-control"
+                               th:value="${project.name}"
+                               required
+                               maxlength="200">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="projectPeriod" class="required">기간</label>
+                        <input type="text" 
+                               id="projectPeriod"
+                               name="period" 
+                               class="form-control"
+                               th:value="${project.period}"
+                               required
+                               maxlength="50"
+                               placeholder="예: 2024.01 ~ 2024.12">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="projectDescription">한 줄 요약</label>
+                    <input type="text" 
+                           id="projectDescription"
+                           name="description" 
+                           class="form-control"
+                           th:value="${project.description}"
+                           maxlength="500"
+                           placeholder="프로젝트의 핵심 성과나 특징을 간단히 요약">
+                </div>
+                
+                <div class="form-group">
+                    <label for="projectTechStack">기술 스택</label>
+                    <input type="text" 
+                           id="projectTechStack"
+                           name="techStack" 
+                           class="form-control"
+                           th:value="${project.techStack}"
+                           maxlength="300"
+                           placeholder="예: Spring Boot, React, MySQL, AWS">
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="projectUrl">프로젝트 URL</label>
+                        <input type="url" 
+                               id="projectUrl"
+                               name="projectUrl" 
+                               class="form-control"
+                               th:value="${project.projectUrl}"
+                               placeholder="https://example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="projectTeamInfo">팀 정보</label>
+                        <input type="text" 
+                               id="projectTeamInfo"
+                               name="teamInfo" 
+                               class="form-control"
+                               th:value="${project.teamInfo}"
+                               maxlength="100"
+                               placeholder="예: 팀 프로젝트 (5명) - 백엔드 담당">
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <span class="btn-icon">💾</span>
+                        기본 정보 저장
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Project Details Display -->
+        <section class="form-section" id="details-section">
+            <h2>프로젝트 상세 정보</h2>
+            
+            <div th:if="${#lists.isEmpty(project.details)}" class="empty-state">
+                <div class="empty-icon">📝</div>
+                <h3>아직 추가된 상세 정보가 없습니다</h3>
+                <p>프로젝트의 문제점, 해결 과정, 성과 등을 이미지와 함께 추가해보세요.</p>
+                <button type="button" class="btn btn-primary" onclick="scrollToAddSection()">
+                    첫 번째 상세 정보 추가하기
+                </button>
+            </div>
+            
+            <div class="details-grid" th:unless="${#lists.isEmpty(project.details)}">
+                <article class="detail-card" th:each="detail, iterStat : ${project.details}">
+                    <div class="detail-image-container">
+                        <img th:src="${detail.imageUrl}" 
+                             th:alt="'상세 정보 ' + ${iterStat.count}"
+                             class="detail-image"
+                             loading="lazy">
+                        <div class="detail-overlay">
+                            <button type="button" 
+                                    class="detail-expand-btn"
+                                    th:onclick="'openImageModal(\'' + ${detail.imageUrl} + '\', \'' + ${detail.description} + '\')'">
+                                <span>🔍</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="detail-content">
+                        <p class="detail-description" th:text="${detail.description}">상세 설명</p>
+                        <div class="detail-actions">
+                            <a th:href="@{/admin/project/detail/delete/{id}(id=${detail.id})}"
+                               class="btn btn-danger btn-sm delete-detail-btn"
+                               th:attr="data-description=${detail.description}"
+                               aria-label="상세 정보 삭제">
+                                <span class="btn-icon">🗑️</span>
+                                삭제
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Add New Detail Section -->
+        <section class="add-detail-section" id="add-detail-section">
+            <h2 class="add-detail-title">새로운 상세 정보 추가</h2>
+            <form th:action="@{/admin/project/{projectId}/addDetail(projectId=${project.id})}" 
+                  method="post" 
+                  enctype="multipart/form-data"
+                  id="addDetailForm">
+                
+                <!-- Drag & Drop File Upload -->
+                <div class="form-group">
+                    <label for="detailImage" class="required">상세 이미지</label>
+                    <div class="drag-drop-area" id="dragDropArea">
+                        <div class="upload-content">
+                            <div class="upload-icon">📷</div>
+                            <p class="upload-text">이미지를 드래그하여 놓거나 클릭하여 선택하세요</p>
+                            <p class="upload-subtext">JPEG, PNG, WebP 형식 / 최대 10MB</p>
+                        </div>
+                        <input type="file" 
+                               id="detailImage"
+                               name="detailImage" 
+                               class="form-control-file"
+                               accept="image/jpeg,image/png,image/webp"
+                               required
+                               style="display: none;">
+                    </div>
+                    <div id="filePreview" class="file-preview" style="display: none;"></div>
+                </div>
+                
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="detailDescription" class="required">상세 설명</label>
+                    <textarea id="detailDescription" 
+                              name="description" 
+                              class="form-control"
+                              rows="6"
+                              required
+                              maxlength="2000"
+                              placeholder="이 이미지에 대한 상세한 설명을 입력하세요. 예: 문제점, 해결 과정, 결과 등"></textarea>
+                    <small class="form-text">
+                        <span class="char-count">
+                            <span id="charCount">0</span> / 2000자
+                        </span>
+                    </small>
+                </div>
+                
+                <!-- Progress Indicator -->
+                <div class="progress-indicator" id="progressIndicator">
+                    <div class="spinner"></div>
+                    <span>상세 정보를 추가하는 중...</span>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-success" id="submitBtn">
+                        <span class="btn-icon">✅</span>
+                        상세 정보 추가
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="resetAddForm()">
+                        <span class="btn-icon">🔄</span>
+                        초기화
+                    </button>
+                </div>
+            </form>
+        </section>
     </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="image-modal" style="display: none;">
+        <div class="image-modal-content">
+            <button type="button" class="image-modal-close" onclick="closeImageModal()">&times;</button>
+            <img id="modalImage" src="" alt="상세 이미지">
+            <div class="image-modal-description">
+                <p id="modalDescription"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="/js/admin.js"></script>
+    <script src="/js/project-detail.js"></script>
 </body>
 </html>

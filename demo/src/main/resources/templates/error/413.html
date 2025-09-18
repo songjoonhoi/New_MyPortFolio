@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파일 크기 초과 - 413</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .error-container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 40px;
+            text-align: center;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .error-code {
+            font-size: 6rem;
+            font-weight: 700;
+            color: #fd7e14;
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+        
+        .error-message {
+            font-size: 1.5rem;
+            color: #343a40;
+            margin-bottom: 15px;
+        }
+        
+        .error-details {
+            color: #6c757d;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .file-info {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .file-info h3 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .file-info p {
+            margin: 5px 0;
+            color: #856404;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-home, .btn-back {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-home {
+            background-color: #3d5a80;
+            color: white;
+        }
+        
+        .btn-home:hover {
+            background-color: #2c4666;
+            transform: translateY(-1px);
+        }
+        
+        .btn-back {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+        }
+        
+        .btn-back:hover {
+            background-color: #e9ecef;
+            color: #495057;
+        }
+        
+        @media (max-width: 768px) {
+            .error-container {
+                margin: 50px 20px;
+                padding: 30px 20px;
+            }
+            
+            .error-code {
+                font-size: 4rem;
+            }
+            
+            .error-message {
+                font-size: 1.25rem;
+            }
+            
+            .error-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-home, .btn-back {
+                width: 200px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-code">413</div>
+        <h1 class="error-message" th:text="${message} ?: '파일 크기가 너무 큽니다'">파일 크기가 너무 큽니다</h1>
+        <p class="error-details" th:text="${details} ?: '업로드하신 파일의 크기가 허용 범위를 초과했습니다.'">
+            업로드하신 파일의 크기가 허용 범위를 초과했습니다.
+        </p>
+        
+        <div class="file-info">
+            <h3>📁 파일 업로드 안내</h3>
+            <p><strong>최대 파일 크기:</strong> 10MB</p>
+            <p><strong>지원 형식:</strong> JPEG, PNG, WebP</p>
+            <p><strong>권장 사항:</strong> 이미지 압축 후 다시 시도해보세요</p>
+        </div>
+        
+        <div class="error-actions">
+            <a href="/" class="btn-home">🏠 홈으로 돌아가기</a>
+            <a href="javascript:history.back()" class="btn-back">← 이전 페이지</a>
+        </div>
+    </div>
+</body>
+</html>
